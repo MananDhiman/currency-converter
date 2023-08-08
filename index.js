@@ -58,7 +58,7 @@ function createHtmlTableFromMap(map, allCurrencies) {
 
     let table = document.getElementById("currency_table");
     
-    const tableHeader = "<tr><th>Short Form</th><th>Currency</th><th>Value</th></tr>";
+    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value</th></tr>";
 
     let tableBody = "";
 
