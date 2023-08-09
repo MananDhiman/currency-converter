@@ -5,13 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter</title>
     <style>
-    table ,th,td{
-        border: 1px solid black;
-    }
+
+        th, td{
+            border: 1px solid black;
+
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
     </style>
 </head>
 <body>
     <h1>Currency Exchange</h1>
+
+    <input type="text" id="amount_1" placeholder="Amount of Currency to be Converted">
+    <select id="currency_1"></select>
+    <span id="amount_2">00.00</span>
+    <select id="currency_2"></select>
+    <button id="convert_currency_1_currency_2">Convert</button>
+    
     <ol>
         <li><s>List All Currency</s></li>
         <li>Search Currency</li>
