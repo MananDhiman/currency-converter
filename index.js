@@ -4,6 +4,8 @@
 const URL_ALL_CURRENCIES_AND_SHORTFORM = "currencies.min.json";
 const URL_EUR_AS_BASE_TO_OTHER_CURRENCIES = "eur.json";
 
+let map;
+let tableStatus = 0;
 main();
 
 function main() {
@@ -12,26 +14,31 @@ function main() {
 
     getParsedDataCollection().then( list => {
 
-        const allCurrencies = list[0];
-        const eurRate = list[1]["eur"];
+        map = new Map();
 
-        let map = new Map();
-        
-        createMapFromCurrencyData(map, allCurrencies, eurRate);
+        fillMapData(list);
+        createPopularCurrenciesTable();
 
-        createHtmlTableFromMap(map, allCurrencies);
+        // createHtmlTableFromMap();
         
-        setCurrenciesInSelect(map);
+        setCurrenciesInSelect();
 
         const convertButton = document.getElementById("convert_currency_1_currency_2");
         convertButton.onclick = function() {
-            convertCurrency(map);
+            convertCurrency();
         };
 
     });
 
     // end the loading screen here
 
+}
+
+var searchBox = document.getElementById("search");
+searchBox.onkeyup = function(){
+    tableStatus = 1;
+    toggleTable();
+    search();
 }
 
 async function getParsedDataCollection() {
@@ -52,32 +59,75 @@ async function getJsonFromApi(url) {
     return data;
 }
 
-function createMapFromCurrencyData(map, all, eurRate) {
+function fillMapData(list) {
+    const all = list[0];
+    const eur = list[1]["eur"];
 
-    Object.keys(all).forEach(function(key){
-        map.set(key, eurRate[key]);
+    Object.keys(all).forEach(function(key) {
+        const obj = {name: all[key], value: eur[key]}
+        map.set(key, obj);
     });
 
 }
 
-function createHtmlTableFromMap(map, allCurrencies) {
+function createPopularCurrenciesTable() {
+    const popularCurrencies = ["usd", "eur", "jpy", "gbp", "cad", "cny", "chf", "inr"];
 
+    let table = document.getElementById("popular_currency_table");
+    
+    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value</th></tr>";
+
+    let tableBody = "";
+
+    console.log(map.get("usd"));
+    for(let curr of popularCurrencies) {
+        // console.log(curr);
+        tableBody += `<tr><td>${curr}</td><td>${map.get(curr).name}</td><td>${map.get(curr) .value}</td></tr>`;
+    }
+
+    const completeTable = tableHeader + tableBody;
+
+    table.innerHTML = completeTable;
+    
+}
+
+function toggleTable() {
+    if(tableStatus == 1) {
+        document.getElementById("currency_table").innerHTML = "";
+        tableStatus = 0;
+    } else {
+        createHtmlTableFromMap();
+        tableStatus = 1;
+    }
+}
+
+function createHtmlTableFromMap(query = undefined) {
+    
     let table = document.getElementById("currency_table");
     
     const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value</th></tr>";
 
     let tableBody = "";
 
-    Object.keys(allCurrencies).forEach(function(key){
-        tableBody += `<tr><td>${key}</td><td>${allCurrencies[key]}</td><td>${map.get(key)}</td></tr>`;
-    });
+    if(query == undefined) {
+        map.forEach(function (value, key) {
+            tableBody += `<tr><td>${key}</td><td>${value.name}</td><td>${value.value}</td></tr>`;
+        })
+    } else {
+        map.forEach(function (value, key) {
+            if(key.toLowerCase().includes(query.toLowerCase()) || value.name.toLowerCase().includes(query.toLowerCase())) {
+                tableBody += `<tr><td>${key}</td><td>${value.name}</td><td>${value.value}</td></tr>`;
+            }
+        })
+    }
+    
 
     const completeTable = tableHeader + tableBody;
 
     table.innerHTML = completeTable;
 }
 
-function setCurrenciesInSelect(map) {
+function setCurrenciesInSelect() {
     const select_1 = document.getElementById("currency_1");
     const select_2 = document.getElementById("currency_2");
 
@@ -92,7 +142,7 @@ function setCurrenciesInSelect(map) {
 
 }
 
-function convertCurrency(map) {
+function convertCurrency() {
     const select_1 = document.getElementById("currency_1");
     const select_2 = document.getElementById("currency_2");
     const amount_1 = document.getElementById("amount_1");
@@ -104,7 +154,7 @@ function convertCurrency(map) {
 
     if (areOptionsSelected(value_1, value_2)) {
         
-        let ratio = map.get(value_2) / map.get(value_1);
+        let ratio = map.get(value_2).value / map.get(value_1).value;
         let convertedAmount = (ratio * amount_1.value).toFixed(2);
         amount_2.textContent = convertedAmount;
 
@@ -120,4 +170,9 @@ function areOptionsSelected(value_1, value_2) {
 
     return true;
 
+}
+
+function search() {
+    const query = document.getElementById("search").value;
+    createHtmlTableFromMap(query);
 }

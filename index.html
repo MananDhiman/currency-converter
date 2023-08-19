@@ -25,13 +25,14 @@
     <span id="amount_2">00.00</span>
     <select id="currency_2"></select>
     <button id="convert_currency_1_currency_2">Convert</button>
-    
-    <ol>
-        <li><s>List All Currency</s></li>
-        <li>Search Currency</li>
-        <li>Convert One Currency to Another</li>
-    </ol>
 
+    <input type="text" id="search" placeholder="search for currency here">
+    <br>
+    
+    <h2>Popular Currencies</h2>
+    <table id="popular_currency_table"></table>
+    <h2>Currencies Table</h2>
+    <button onclick="toggleTable()">Toggle Full Table</button>
     <table id="currency_table"></table>
     
     <script src="index.js"></script>
