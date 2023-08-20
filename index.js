@@ -75,14 +75,14 @@ function createPopularCurrenciesTable() {
 
     let table = document.getElementById("popular_currency_table");
     
-    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value</th></tr>";
+    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value (eur)</th></tr>";
 
     let tableBody = "";
 
     console.log(map.get("usd"));
     for(let curr of popularCurrencies) {
         // console.log(curr);
-        tableBody += `<tr><td>${curr}</td><td>${map.get(curr).name}</td><td>${map.get(curr) .value}</td></tr>`;
+        tableBody += `<tr><td>${curr}</td><td>${map.get(curr).name}</td><td>${map.get(curr).value}</td></tr>`;
     }
 
     const completeTable = tableHeader + tableBody;
@@ -105,7 +105,7 @@ function createHtmlTableFromMap(query = undefined) {
     
     let table = document.getElementById("currency_table");
     
-    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value</th></tr>";
+    const tableHeader = "<tr><th>ISO Currency Code</th><th>Currency</th><th>Value (eur)</th></tr>";
 
     let tableBody = "";
 
