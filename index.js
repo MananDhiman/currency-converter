@@ -19,14 +19,9 @@ function main() {
         fillMapData(list);
         createPopularCurrenciesTable();
 
-        // createHtmlTableFromMap();
+        createHtmlTableFromMap();
         
         setCurrenciesInSelect();
-
-        const convertButton = document.getElementById("convert_currency_1_currency_2");
-        convertButton.onclick = function() {
-            convertCurrency();
-        };
 
     });
 
@@ -36,8 +31,8 @@ function main() {
 
 var searchBox = document.getElementById("search");
 searchBox.onkeyup = function(){
-    tableStatus = 1;
-    toggleTable();
+    // tableStatus = 1;
+    // toggleTable();
     search();
 }
 
@@ -91,15 +86,15 @@ function createPopularCurrenciesTable() {
     
 }
 
-function toggleTable() {
-    if(tableStatus == 1) {
-        document.getElementById("currency_table").innerHTML = "";
-        tableStatus = 0;
-    } else {
-        createHtmlTableFromMap();
-        tableStatus = 1;
-    }
-}
+// function toggleTable() {
+//     if(tableStatus == 1) {
+//         document.getElementById("currency_table").innerHTML = "";
+//         tableStatus = 0;
+//     } else {
+//         createHtmlTableFromMap();
+//         tableStatus = 1;
+//     }
+// }
 
 function createHtmlTableFromMap(query = undefined) {
     
@@ -146,6 +141,7 @@ function convertCurrency() {
     const select_1 = document.getElementById("currency_1");
     const select_2 = document.getElementById("currency_2");
     const amount_1 = document.getElementById("amount_1");
+    const htmlRatio = document.getElementById("ratio");
 
     const value_1 = select_1.value;
     const value_2 = select_2.value;
@@ -157,9 +153,10 @@ function convertCurrency() {
         let ratio = map.get(value_2).value / map.get(value_1).value;
         let convertedAmount = (ratio * amount_1.value).toFixed(2);
         amount_2.textContent = convertedAmount;
+        htmlRatio.textContent = " "+`(1 ${value_1} = ${ratio} ${value_2}) `;
 
     } else {
-        alert("Please select both currencies")
+        // alert("Please select both currencies")
     }
 
 }
