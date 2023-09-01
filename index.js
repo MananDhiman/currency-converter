@@ -1,8 +1,8 @@
-// const URL_ALL_CURRENCIES_AND_SHORTFORM = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json";
-// const URL_EUR_AS_BASE_TO_OTHER_CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json";
+const URL_ALL_CURRENCIES_AND_SHORTFORM = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json";
+const URL_EUR_AS_BASE_TO_OTHER_CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json";
 
-const URL_ALL_CURRENCIES_AND_SHORTFORM = "currencies.min.json";
-const URL_EUR_AS_BASE_TO_OTHER_CURRENCIES = "eur.json";
+// const URL_ALL_CURRENCIES_AND_SHORTFORM = "currencies.min.json";
+// const URL_EUR_AS_BASE_TO_OTHER_CURRENCIES = "eur.json";
 
 let map;
 let tableStatus = 0;
